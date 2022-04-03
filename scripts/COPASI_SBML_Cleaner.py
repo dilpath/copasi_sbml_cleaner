@@ -41,6 +41,20 @@ class COPASI_SBML_Cleaner:
         self.delete_elements_by_xpath(xpaths, namespace_observables)
 
 
+    def delete_annotations(
+            self,
+    ):
+        '''
+        Removes annotations from an SBML file.
+        '''
+        xpath = '//sbml:annotation'
+        namespaces = {
+            'sbml': 'http://www.sbml.org/sbml/level2/version4',
+        }
+        for element in self.sbml.xpath(xpath, namespaces=namespaces):
+            element.getparent().remove(element)
+
+
     def delete_elements_by_xpath(
             self,
             xpaths: Set[str],
@@ -78,7 +92,7 @@ class COPASI_SBML_Cleaner:
             output_filename,
             encoding='UTF-8',
             pretty_print=True,
-            xml_declaration=True
+            xml_declaration=True,
         )
         return output_filename
 
